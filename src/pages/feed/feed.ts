@@ -1,3 +1,4 @@
+import { MovieProvider } from './../../providers/movie/movie';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
@@ -11,6 +12,9 @@ import { NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-feed',
   templateUrl: 'feed.html',
+  providers: [
+    MovieProvider
+  ]
 })
 export class FeedPage {
   public objetoFeed = {
@@ -22,9 +26,11 @@ export class FeedPage {
     timeComment: "11h ago"
   }
 
+  public listaFilmes = Array<any>();
+
   public nomeUsuario: string = "Roosevelt";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private movieProvider: MovieProvider) {
 
   }
 
@@ -33,7 +39,18 @@ export class FeedPage {
   }
 
   ionViewDidLoad() {
-    //this.soma();
+    this.movieProvider.getLatestMovies().subscribe(
+      data=>{
+
+        const response = (data as any);
+        const objetoRetorno = JSON.parse(response._body);
+        this.listaFilmes = objetoRetorno.results;
+
+        console.log(objetoRetorno);
+      }, error=>{
+        console.log(error);
+      }
+    )
   }
 
 }
