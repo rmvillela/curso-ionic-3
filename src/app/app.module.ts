@@ -16,6 +16,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http'
 import { MovieProvider } from '../providers/movie/movie';
 
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': 'FeedON'
+  }
+};
+
 @NgModule({
   declarations: [
     MyApp,
@@ -29,7 +37,8 @@ import { MovieProvider } from '../providers/movie/movie';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -49,3 +58,4 @@ import { MovieProvider } from '../providers/movie/movie';
   ]
 })
 export class AppModule {}
+
